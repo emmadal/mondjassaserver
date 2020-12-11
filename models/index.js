@@ -37,7 +37,7 @@ const categorySchema = mongoose.Schema(
 );
 
 const UserModel = mongoose.model("User", userSchema);
-const PostSchema = mongoose.model("Post", postSchema);
+const PostModel = mongoose.model("Post", postSchema);
 const CategoryModel = mongoose.model("Category", categorySchema);
 
-export { UserModel, PostSchema, CategoryModel };
+export { UserModel, PostModel, CategoryModel };
