@@ -21,6 +21,7 @@ const postSchema = mongoose.Schema(
     description: String,
     price: Number,
     phone: Number,
+    deleted: Boolean,
     photos: [String],
   },
   { timestamps: true }
