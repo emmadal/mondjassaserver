@@ -20,6 +20,7 @@ export const typeDefs = gql`
     picture: File
     biography: String
     posts: [Post]
+    token: String
   }
 
   type Post {
