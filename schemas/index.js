@@ -15,7 +15,7 @@ export const typeDefs = gql`
     name: String!
     email: String!
     password: String!
-    phone: Int!
+    phone: String!
     picture: File
     biography: String
     posts: [Post]
@@ -25,6 +25,8 @@ export const typeDefs = gql`
   type Post {
     id: ID!
     city: String!
+    currency: String!
+    country: String!
     category: Category!
     title: String!
     description: String
@@ -52,7 +54,7 @@ export const typeDefs = gql`
     name: String!
     email: String!
     password: String!
-    phone: Int!
+    phone: String!
     picture: Upload
     biography: String
   }
@@ -60,6 +62,8 @@ export const typeDefs = gql`
   input _post {
     city: String!
     category: _category!
+    currency: String!
+    country: String!
     title: String!
     description: String
     price: Int!
@@ -67,9 +71,9 @@ export const typeDefs = gql`
     deleted: Boolean
   }
 
-  type Mutation{
-    adduser(input: _user) : User!
-    addcategory(input: _category) : Category!
-    addpost(input: _post) : Post!
+  type Mutation {
+    createUser(input: _user): User!
+    createCategory(input: _category): Category!
+    createPost(input: _post): Post!
   }
 `;

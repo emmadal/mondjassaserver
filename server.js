@@ -11,7 +11,7 @@ const dbConnect = async (url) => {
     await mongoose.connect(url, {
       useNewUrlParser: true,
       useCreateIndex:true,
-      // useUnifiedTopology: true, // used for Mongo Atlas instead of local database
+      useUnifiedTopology: true, // used for Mongo Atlas instead of local database
     });
     console.log(`connected to database with mogoose version ${mongoose.version}`);
     
