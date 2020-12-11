@@ -1,0 +1,10 @@
+# dependencies
+/node_modules
+/.vscode
+
+# lock files
+yarn.lock
+package-lock.json
+
+# environnement files
+.env
