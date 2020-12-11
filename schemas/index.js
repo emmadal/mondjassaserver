@@ -3,9 +3,9 @@ import { gql } from "apollo-server";
 export const typeDefs = gql`
   type Query {
     posts: [Post]!
-    post(name: String!): [Post!]
+    post(title: String!): [Post!]!
     users: [User!]
-    user(name: String!): User!
+    user(name: String!): [User!]!
     categories: [Category!]
     category(name: String): Category!
   }
@@ -16,7 +16,7 @@ export const typeDefs = gql`
     email: String!
     password: String!
     phone: String!
-    picture: File
+    imageUrl: String
     biography: String
     posts: [Post]
     token: String
@@ -31,14 +31,8 @@ export const typeDefs = gql`
     title: String!
     description: String
     price: Int!
-    photos: [File!]
+    photos: [String!]
     deleted: Boolean
-  }
-
-  type File {
-    filename: String!
-    mimetype: String!
-    encoding: String!
   }
 
   type Category {
@@ -55,19 +49,19 @@ export const typeDefs = gql`
     email: String!
     password: String!
     phone: String!
-    picture: Upload
+    imageUrl: String
     biography: String
   }
 
   input _post {
     city: String!
-    category: _category!
+    category: String!
     currency: String!
     country: String!
     title: String!
     description: String
     price: Int!
-    photos: [Upload!]
+    photos: [String!]
     deleted: Boolean
   }
 

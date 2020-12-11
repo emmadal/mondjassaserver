@@ -6,12 +6,8 @@ const userSchema = mongoose.Schema({
   password: String,
   phone: String,
   biography: String,
+  imageUrl: String,
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-  picture: {
-    filename: String,
-    mimetype: String,
-    encoding: String,
-  },
 });
 
 const postSchema = mongoose.Schema(
