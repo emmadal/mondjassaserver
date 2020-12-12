@@ -32,5 +32,9 @@ export const resolvers = {
     createPost: async (_, { input }) => {
       return await PostModel.create(input);
     },
+    deletePost: async (_, { id }) => {
+      await PostModel.deleteOne({_id: id })
+      return await PostModel.find().sort({ updateAt: 1 })
+    }
   },
 };

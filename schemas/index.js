@@ -2,9 +2,9 @@ import { gql } from "apollo-server";
 
 export const typeDefs = gql`
   type Query {
-    posts: [Post]!
+    posts: [Post!]!
     post(title: String!): [Post!]!
-    users: [User!]
+    users: [User!]!
     user(name: String!): [User!]!
     categories: [Category!]
     category(name: String): Category!
@@ -69,5 +69,6 @@ export const typeDefs = gql`
     createUser(input: _user): User!
     createCategory(input: _category): Category!
     createPost(input: _post): Post!
+    deletePost(id: ID!): [Post!]
   }
 `;
