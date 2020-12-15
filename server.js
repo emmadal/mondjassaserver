@@ -2,6 +2,8 @@ import { ApolloServer } from "apollo-server";
 import { typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
 import mongoose from "mongoose";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = new ApolloServer({ typeDefs, resolvers });
 

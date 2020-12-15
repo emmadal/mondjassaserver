@@ -20,7 +20,10 @@ const postSchema = mongoose.Schema(
     price: Number,
     phone: Number,
     deleted: Boolean,
+    creator: { type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     photos: [String],
+    date: {type: Date, default: Date.now}
   },
   { timestamps: true }
 );

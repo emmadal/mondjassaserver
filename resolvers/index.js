@@ -1,6 +1,6 @@
 import { ApolloError } from "apollo-server";
 import { UserModel, PostModel, CategoryModel } from "../models";
-import { createPassword, checkPassword } from "../utils";
+import { createPassword, checkPassword, generateToken } from "../utils";
 
 export const resolvers = {
   Query: {
@@ -8,13 +8,15 @@ export const resolvers = {
     user: async (_, { name }) => {
       return await UserModel.find({ name: { $regex: name, $options: "i" } });
     },
-    posts: async () => await PostModel.find().sort({ updateAt: 1 }),
+    posts: async () =>
+      await PostModel.find({ deleted: false }).sort({ updateAt: -1 }),
     post: async (_, { title }) => {
       return await PostModel.find({
         title: { $regex: title, $options: "i" },
       }).sort({ updateAt: 1 });
     },
-    categories: async () => await CategoryModel.find().sort({ name: 1 }),
+    categories: async () => await CategoryModel.find(),
+    category: async (_, { id }) => await CategoryModel.findById(id),
   },
 
   Mutation: {
@@ -33,8 +35,25 @@ export const resolvers = {
       return await PostModel.create(input);
     },
     deletePost: async (_, { id }) => {
-      await PostModel.deleteOne({_id: id })
-      return await PostModel.find().sort({ updateAt: 1 })
-    }
+      await PostModel.deleteOne({ _id: id });
+      return await PostModel.find().sort({ updateAt: -1 });
+    },
+    updatePost: async (_, { id, input }) => {
+      await PostModel.updateOne({ _id: id }, { $set: input }, { new: true });
+      return PostModel.find().sort({ updateAt: -1 });
+    },
+    login: async (_, { email, password }) => {
+      const user = await UserModel.findOne({ email: email });
+      if (user) {
+        const isPassword = await checkPassword(user.password, password);
+        if (isPassword) {
+          user.token = generateToken({userID: user._id, userName: user.name});
+          return user;
+        }
+      }
+      return new ApolloError(
+        "Login failed 😭. Please verify your email or password!"
+      );
+    },
   },
 };
