@@ -25,8 +25,6 @@ export const typeDefs = gql`
   type Post {
     id: ID!
     city: String!
-    currency: String!
-    country: String!
     category: Category!
     title: String!
     description: String
@@ -51,15 +49,11 @@ export const typeDefs = gql`
     email: String!
     password: String!
     phone: String!
-    imageUrl: String
-    biography: String
   }
 
   input _post {
     city: String!
     category: String!
-    currency: String!
-    country: String!
     title: String!
     description: String
     price: Int!

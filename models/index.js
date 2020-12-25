@@ -15,8 +15,6 @@ const postSchema = mongoose.Schema(
     city: String,
     title: String,
     description: String,
-    currency: String,
-    country: String,
     price: Number,
     phone: Number,
     deleted: Boolean,

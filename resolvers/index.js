@@ -21,17 +21,22 @@ export const resolvers = {
 
   Mutation: {
     createUser: async (_, { input }) => {
-      const user = await UserModel.findOne({ email: input.email });
-      if (user) return new ApolloError("User already exist!");
-      input.password = await createPassword(input.password);
-      return await UserModel.create(input);
+      try {
+        const user = await UserModel.findOne({ email: input.email });
+        if (user) throw new ApolloError("User already exist!");
+        input.password = await createPassword(input.password);
+        return await UserModel.create(input);
+      } catch (error) {
+        console.log('error:' + error)
+      }
     },
     createCategory: async (_, { input }) => {
       const category = await CategoryModel.findOne({ name: input.name });
-      if (category) return new ApolloError("Category already exist!");
+      if (category) throw new ApolloError("Category already exist!");
       return await CategoryModel.create(input);
     },
     createPost: async (_, { input }) => {
+      input.deleted = false;
       return await PostModel.create(input);
     },
     deletePost: async (_, { id }) => {
