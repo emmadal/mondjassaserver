@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
   phone: String,
   biography: String,
   imageUrl: String,
-  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  posts: [ {type: mongoose.Schema.Types.ObjectId, ref: "Post"} ],
 });
 
 const postSchema = mongoose.Schema(
@@ -18,7 +18,7 @@ const postSchema = mongoose.Schema(
     price: Number,
     phone: Number,
     deleted: Boolean,
-    creator: { type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User"},
     category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     photos: [String],
     date: {type: Date, default: Date.now}

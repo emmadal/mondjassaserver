@@ -1,11 +1,30 @@
-import { ApolloServer } from "apollo-server";
+
+require('dotenv').config()
+import jwt from 'jsonwebtoken'
+import { ApolloServer} from "apollo-server";
 import { typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
-dotenv.config()
 
-const app = new ApolloServer({ typeDefs, resolvers });
+const getUser = (token) => {
+  try {
+    if (token) {
+      return jwt.verify(token, process.env.SECRET_KEY);
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
+
+const app = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    const token = req.headers.authorization || "";
+    return { user: getUser(token.replace("Bearer", "")) };
+  },
+});
 
 // asynchronous function that allow us to connect on our database
 const dbConnect = async (url) => {
@@ -26,9 +45,6 @@ const dbConnect = async (url) => {
 
 // starting our GraphQL server...
 app.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-//   dbConnect(
-//     "mongodb+srv://emmadal:reactjs2019@agenda-cluster-ruxrq.mongodb.net/agenda?retryWrites=true&w=majority"
-//   );
-  dbConnect("mongodb://localhost:27017/mondjassa");
+  dbConnect(process.env.DBHOST);
   console.log(`🚀 GraphQL server started at ${url}`);
 });

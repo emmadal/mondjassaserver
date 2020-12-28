@@ -5,9 +5,9 @@ export const typeDefs = gql`
     posts: [Post!]
     post(title: String!): [Post!]!
     users: [User!]!
-    user(name: String!): [User!]!
+    me: User
     categories: [Category!]
-    category(id: ID!): Category!
+    category(id: String!): Category!
   }
 
   type User {
@@ -18,8 +18,12 @@ export const typeDefs = gql`
     phone: String!
     imageUrl: String
     biography: String
-    posts: [Post]
-    token: String
+    posts: [ID!]!
+  }
+
+  type AuthPayload {
+    token: String!
+    user: User!
   }
 
   type Post {
@@ -63,10 +67,10 @@ export const typeDefs = gql`
 
   type Mutation {
     createUser(input: _user!): User!
+    login(email: String!, password: String!): AuthPayload!
     createCategory(input: _category!): Category!
     createPost(input: _post!): Post!
     deletePost(id: ID!): [Post!]
     updatePost(id: ID!, input: _post!): Post!
-    login(email: String!, password: String!): User!
   }
 `;
