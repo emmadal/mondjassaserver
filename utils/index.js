@@ -1,5 +1,6 @@
+require('dotenv').config()
 import bcrypt from "bcrypt";
-import { sign, verify } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 
 export const createPassword = async (data) => {
   const salt = 10;

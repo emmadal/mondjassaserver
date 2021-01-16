@@ -4,8 +4,10 @@ export const typeDefs = gql`
   type Query {
     posts: [Post!]
     post(title: String!): [Post!]!
+    postID(id: String!): Post!
     users: [User!]!
-    me: User
+    me: User!
+    userID(id: String): User!
     categories: [Category!]
     category(id: String!): Category!
   }
@@ -18,7 +20,7 @@ export const typeDefs = gql`
     phone: String!
     imageUrl: String
     biography: String
-    posts: [ID!]!
+    posts: [Post!]
   }
 
   type AuthPayload {
@@ -29,12 +31,12 @@ export const typeDefs = gql`
   type Post {
     id: ID!
     city: String!
-    category: Category!
+    category: ID!
     title: String!
     description: String
     price: Int!
     photos: [String!]
-    user: User!
+    author: ID!
     date: String!
     deleted: Boolean
   }
@@ -49,10 +51,12 @@ export const typeDefs = gql`
   }
 
   input _user {
-    name: String!
-    email: String!
-    password: String!
-    phone: String!
+    name: String
+    email: String
+    password: String
+    phone: String
+    imageUrl: String
+    biography: String
   }
 
   input _post {
@@ -67,10 +71,11 @@ export const typeDefs = gql`
 
   type Mutation {
     createUser(input: _user!): User!
+    updateUser(id: ID!, input: _user!): User!
     login(email: String!, password: String!): AuthPayload!
     createCategory(input: _category!): Category!
     createPost(input: _post!): Post!
-    deletePost(id: ID!): [Post!]
+    deletePost(id: ID!): [Post]
     updatePost(id: ID!, input: _post!): Post!
   }
 `;

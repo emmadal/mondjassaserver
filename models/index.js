@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
-  name: String,
-  email: { type: String, index: { unique: true } },
-  password: String,
-  phone: String,
-  biography: String,
-  imageUrl: String,
-  posts: [ {type: mongoose.Schema.Types.ObjectId, ref: "Post"} ],
-});
+
 
 const postSchema = mongoose.Schema(
   {
@@ -35,6 +27,16 @@ const categorySchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const userSchema = mongoose.Schema({
+  name: String,
+  email: { type: String, index: { unique: true } },
+  password: String,
+  phone: String,
+  biography: String,
+  imageUrl: String,
+  posts: [postSchema],
+});
 
 const UserModel = mongoose.model("User", userSchema);
 const PostModel = mongoose.model("Post", postSchema);
